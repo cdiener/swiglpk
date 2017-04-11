@@ -3,7 +3,6 @@ environment:
     PIP_CACHE_DIR: "pip_cache"
 
   matrix:
-
     - PYTHON: "C:\\Python27"
     - PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python34"
