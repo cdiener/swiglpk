@@ -7,7 +7,6 @@ environment:
     - PYTHON: "C:\\Python27-x64"
       DISTUTILS_USE_SDK: "1"
     - PYTHON: "C:\\Python34"
-      DISTUTILS_USE_SDK: "1"
     - PYTHON: "C:\\Python34-x64"
       DISTUTILS_USE_SDK: "1"
     - PYTHON: "C:\\Python35"
@@ -53,7 +52,7 @@ install:
   - choco install -y swig
 
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
-  - "appveyor\\build.cmd %PYTHON%/python appveyor/build_glpk.py"
+  - "appveyor\\build.cmd python appveyor/build_glpk.py"
   - "appveyor\\build.cmd python setup.py install"
 
 build: off
