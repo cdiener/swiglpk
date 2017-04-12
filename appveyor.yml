@@ -1,6 +1,7 @@
 environment:
   global:
     PIP_CACHE_DIR: "pip_cache"
+    SWIG_VERSION: "3.0.12"
 
   matrix:
     - PYTHON: "C:\\Python27"
@@ -49,8 +50,9 @@ install:
   # about it being out of date.
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
-  - "7z x appveyor\\swigwin.zip -oappveyor\\swig"
-  - "SET PATH=appveyor\\swig;%PATH%"
+  - "7z x appveyor\\swigwin.zip"
+  - "ls appveyor\\swigwin-%SWIG_VERSION%"
+  - "SET PATH=appveyor\\swigwin-%SWIG_VERSION%;%PATH%"
 
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
   - "appveyor\\build.cmd python appveyor/build_glpk.py"
