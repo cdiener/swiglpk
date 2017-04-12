@@ -49,7 +49,7 @@ install:
   # about it being out of date.
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
-  - "7z x appveyor\\swigwin.zip -o appveyor\\swig"
+  - "7z x appveyor\\swigwin.zip -oappveyor\\swig"
   - "SET PATH=appveyor\\swig;%PATH%"
 
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
