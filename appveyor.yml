@@ -39,7 +39,7 @@ install:
   - ECHO "Installed SDKs:"
   - ps: "ls \"C:/Program Files/Microsoft SDKs/Windows\""
 
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;appveyor;%PATH%"
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
   # Check that we have the expected version and architecture for Python
   - "python --version"
@@ -48,6 +48,9 @@ install:
   # Upgrade to the latest version of pip to avoid it displaying warnings
   # about it being out of date.
   - "pip install --disable-pip-version-check --user --upgrade pip"
+
+  - "7z x appveyor\\swigwin.zip -o appveyor\\swig"
+  - "SET PATH=appveyor\\swig;%PATH%"
 
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
   - "build.cmd python appveyor/build_glpk.py"
