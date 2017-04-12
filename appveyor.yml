@@ -51,8 +51,7 @@ install:
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
   - "7z x appveyor\\swigwin.zip"
-  - "ls"
-  - "SET PATH=appveyor\\swigwin-%SWIG_VERSION%;%PATH%"
+  - "SET PATH=swigwin-%SWIG_VERSION%;%PATH%"
 
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
   - "appveyor\\build.cmd python appveyor/build_glpk.py"
