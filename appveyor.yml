@@ -39,7 +39,7 @@ install:
   - ECHO "Installed SDKs:"
   - ps: "ls \"C:/Program Files/Microsoft SDKs/Windows\""
 
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;appveyor;%PATH%"
 
   # Check that we have the expected version and architecture for Python
   - "python --version"
@@ -49,11 +49,9 @@ install:
   # about it being out of date.
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
-  - choco install -y swig
-
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
-  - "appveyor\\build.cmd python appveyor/build_glpk.py"
-  - "appveyor\\build.cmd python setup.py install"
+  - "build.cmd python appveyor/build_glpk.py"
+  - "build.cmd python setup.py install"
 
 build: off
 
@@ -68,8 +66,8 @@ test_script:
   - "dir"
 
 after_test:
-  - "appveyor\\build.cmd python setup.py bdist_wheel"
-  - "appveyor\\build.cmd python setup.py bdist_wininst"
+  - "build.cmd python setup.py bdist_wheel"
+  - "build.cmd python setup.py bdist_wininst"
   - ps: "ls dist"
 
 artifacts:
