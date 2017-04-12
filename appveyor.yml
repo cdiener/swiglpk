@@ -51,7 +51,7 @@ install:
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
   - "7z x appveyor\\swigwin.zip"
-  - "ls appveyor\\swigwin-%SWIG_VERSION%"
+  - "ls appveyor"
   - "SET PATH=appveyor\\swigwin-%SWIG_VERSION%;%PATH%"
 
   - "%PYTHON%/python -m pip install pip setuptools>=34.0 nose twine wheel --upgrade"
