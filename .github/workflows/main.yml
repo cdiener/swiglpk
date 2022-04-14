@@ -74,13 +74,23 @@ jobs:
             ./wheelhouse/*.whl
             ./wheelhouse/*.tar.gz
 
+      - name: Create GitHub release for new GLPK version
+        uses: softprops/action-gh-release@v1
+        if: steps.version.outputs.glpk_version != steps.version.outputs.swiglpk_version && github.event_name != 'pull_request'
+        with:
+          tag_name: ${{ format('{0}.0', github.glpk_version) }}
+          release_name: ${{ format('{0}.0', github.glpk_version) }}
+          body: "This is an automatic release due to an update of GLPK to ${{ github.glpk_version }}."
+          files: ./wheelhouse/*.*
+          draft: false
+          prerelease: false
+
   deploy:
     name: Release to Github and deploy to PyPI
     needs: build_wheels
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags')
-    # alternatively, to publish when a GitHub Release is created, use the following rule:
-    # if: github.event_name == 'release' && github.event.action == 'published'
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -109,16 +119,12 @@ jobs:
       run:
         twine upload --skip-existing --non-interactive ./wheelhouse/*
 
-    - name: Create GitHub release
-      uses: actions/create-release@v1
-      if: steps.version.outputs.glpk_version != steps.version.outputs.swigplk_version
-      env:
-        # This token is set by gh actions
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create GitHub release for tag
+      uses: softprops/action-gh-release@v1
+      if: github.event_name != 'release'
       with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        body_path: "Release of version ${{ steps.version.glpk_version }}"
+        body: "This is a bug fix release still using GLPK ${{ github.glpk_version }}."
+        files: ./wheelhouse/*.*
         draft: false
         prerelease: false
 
